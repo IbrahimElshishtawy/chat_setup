@@ -53,7 +53,8 @@ class ProfileScreen extends StatelessWidget {
             children: [
               const CircleAvatar(
                 radius: 50,
-                backgroundImage: NetworkImage('https://via.placeholder.com/100'),
+                backgroundImage:
+                    NetworkImage('https://via.placeholder.com/100'),
               ),
               Container(
                 padding: const EdgeInsets.all(4),
@@ -61,7 +62,8 @@ class ProfileScreen extends StatelessWidget {
                   color: Colors.blue,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.camera_alt, size: 16, color: Colors.white),
+                child:
+                    const Icon(Icons.camera_alt, size: 16, color: Colors.white),
               ),
             ],
           ),
@@ -180,9 +182,12 @@ class ProfileScreen extends StatelessWidget {
           const SizedBox(height: 12),
           Row(
             children: [
-              IconButton(icon: const Icon(Icons.thumb_up_outlined), onPressed: () {}),
-              IconButton(icon: const Icon(Icons.comment_outlined), onPressed: () {}),
-              IconButton(icon: const Icon(Icons.share_outlined), onPressed: () {}),
+              IconButton(
+                  icon: const Icon(Icons.thumb_up_outlined), onPressed: () {}),
+              IconButton(
+                  icon: const Icon(Icons.comment_outlined), onPressed: () {}),
+              IconButton(
+                  icon: const Icon(Icons.share_outlined), onPressed: () {}),
             ],
           ),
         ],

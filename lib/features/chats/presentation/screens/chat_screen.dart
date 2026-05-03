@@ -1,27 +1,8 @@
 import 'package:flutter/material.dart';
-
-class Chat {
-  final String title;
-  final String avatarUrl;
-  final bool isGroup;
-  final bool isChannel;
-  final String time;
-  final String subtitle;
-  final int unreadCount;
-
-  Chat({
-    required this.title,
-    required this.avatarUrl,
-    required this.isGroup,
-    required this.isChannel,
-    required this.time,
-    required this.subtitle,
-    required this.unreadCount,
-  });
-}
+import 'package:chat_setup/core/mock/sample_data.dart';
 
 class ChatScreen extends StatefulWidget {
-  final Chat chat;
+  final SampleChat chat;
 
   const ChatScreen({super.key, required this.chat});
 

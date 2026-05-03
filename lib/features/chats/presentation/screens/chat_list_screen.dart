@@ -1,6 +1,7 @@
 import 'package:chat_setup/core/mock/sample_data.dart';
 import 'package:flutter/material.dart';
 import 'chat_screen.dart';
+import 'user_search_screen.dart';
 
 class ChatListScreen extends StatelessWidget {
   const ChatListScreen({super.key});
@@ -31,8 +32,14 @@ class ChatListScreen extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(Icons.add),
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => const UserSearchScreen(),
+            ),
+          );
+        },
+        child: const Icon(Icons.search),
       ),
     );
   }
