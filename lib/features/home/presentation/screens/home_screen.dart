@@ -1,3 +1,4 @@
+import 'package:chat_setup/core/mock/sample_data.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -23,9 +24,11 @@ class HomeScreen extends StatelessWidget {
               height: 100,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                itemCount: 10,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                itemCount: sampleStories.length,
                 itemBuilder: (context, index) {
+                  final story = sampleStories[index];
                   return Padding(
                     padding: const EdgeInsets.only(right: 12),
                     child: Column(
@@ -40,23 +43,24 @@ class HomeScreen extends StatelessWidget {
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
                             ),
-                            border: Border.all(color: Colors.transparent, width: 2),
+                            border:
+                                Border.all(color: Colors.transparent, width: 2),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(2.0),
                             child: CircleAvatar(
-                              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                              backgroundColor:
+                                  Theme.of(context).scaffoldBackgroundColor,
                               child: CircleAvatar(
                                 radius: 28,
-                                backgroundImage: NetworkImage(
-                                    'https://i.pravatar.cc/150?img=${index + 10}'),
+                                backgroundImage: NetworkImage(story.avatarUrl),
                               ),
                             ),
                           ),
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          index == 0 ? 'Your Story' : 'User $index',
+                          story.isYourStory ? 'Your Story' : story.name,
                           style: const TextStyle(fontSize: 12),
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -74,7 +78,7 @@ class HomeScreen extends StatelessWidget {
               (context, index) {
                 return _buildPostCard(context, index);
               },
-              childCount: 10,
+              childCount: samplePosts.length,
             ),
           ),
         ],
@@ -83,66 +87,60 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildPostCard(BuildContext context, int index) {
+    final post = samplePosts[index];
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      child: Row(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Avatar & connecting line (Threads style)
-          Column(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CircleAvatar(
-                backgroundImage: NetworkImage('https://i.pravatar.cc/150?img=$index'),
-                radius: 20,
+              Row(
+                children: [
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(post.avatarUrl),
+                    radius: 20,
+                  ),
+                  const SizedBox(width: 10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        post.username,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        post.timeAgo,
+                        style:
+                            const TextStyle(color: Colors.grey, fontSize: 12),
+                      ),
+                    ],
+                  )
+                ],
               ),
-              if (index != 9) // don't show line on last
-                Container(
-                  width: 2,
-                  height: 100,
-                  color: Theme.of(context).dividerColor,
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                )
+              const Icon(Icons.more_horiz, size: 20, color: Colors.grey),
             ],
           ),
-          const SizedBox(width: 12),
-          // Post Content
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Username $index',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Row(
-                      children: [
-                        const Text('2h', style: TextStyle(color: Colors.grey, fontSize: 13)),
-                        const SizedBox(width: 8),
-                        const Icon(Icons.more_horiz, size: 16, color: Colors.grey),
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 4),
-                const Text(
-                  'This is a sample post mimicking the Threads style layout. It supports multi-line text and elegant spacing.',
-                ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    _buildInteractionIcon(Icons.favorite_border, '1.2k'),
-                    _buildInteractionIcon(Icons.chat_bubble_outline, '45'),
-                    _buildInteractionIcon(Icons.repeat, '12'),
-                    _buildInteractionIcon(Icons.send_outlined, ''),
-                  ],
-                ),
-                const SizedBox(height: 16),
-              ],
-            ),
-          )
+          const SizedBox(height: 12),
+          Text(post.content),
+          const SizedBox(height: 12),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: Image.network(post.imageUrl,
+                fit: BoxFit.cover, height: 180, width: double.infinity),
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              _buildInteractionIcon(Icons.favorite_border, '${post.likes}'),
+              _buildInteractionIcon(
+                  Icons.chat_bubble_outline, '${post.comments}'),
+              _buildInteractionIcon(Icons.repeat, '${post.shares}'),
+              _buildInteractionIcon(Icons.send_outlined, ''),
+            ],
+          ),
+          const SizedBox(height: 16),
         ],
       ),
     );
@@ -156,7 +154,8 @@ class HomeScreen extends StatelessWidget {
           Icon(icon, size: 20, color: Colors.grey[600]),
           if (count.isNotEmpty) ...[
             const SizedBox(width: 4),
-            Text(count, style: TextStyle(color: Colors.grey[600], fontSize: 13)),
+            Text(count,
+                style: TextStyle(color: Colors.grey[600], fontSize: 13)),
           ]
         ],
       ),
