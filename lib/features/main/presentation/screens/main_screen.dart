@@ -1,5 +1,5 @@
 import 'package:chat_setup/features/chats/presentation/screens/chat_list_screen.dart';
-import 'package:chat_setup/features/dashboard/presentation/screens/dashboard_screen.dart';
+import 'package:chat_setup/features/dashboard/presentation/screens/profile_screen.dart';
 import 'package:chat_setup/features/home/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -15,10 +15,9 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _screens = [
     const HomeScreen(),
-    const Center(child: Text('Search/Explore Placeholder')),
-    const Center(child: Text('Create Post Placeholder')),
     const ChatListScreen(),
-    const DashboardScreen(), // Placeholder for Profile/Dashboard
+    const Center(child: Text('Notifications Placeholder')),
+    const ProfileScreen(), // Profile
   ];
 
   @override
@@ -42,19 +41,14 @@ class _MainScreenState extends State<MainScreen> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search_outlined),
-            activeIcon: Icon(Icons.search),
-            label: 'Explore',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_box_outlined),
-            activeIcon: Icon(Icons.add_box),
-            label: 'Create',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.chat_bubble_outline),
             activeIcon: Icon(Icons.chat_bubble),
             label: 'Chats',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications_none),
+            activeIcon: Icon(Icons.notifications),
+            label: 'Notifications',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_outline),
